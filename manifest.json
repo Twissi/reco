@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Econsider",
+  "description": "Econsider",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"], //TODO: only match amazon.de
+      "js": ["libs/jquery-3.3.1.min.js", "content.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["libs/jquery-3.3.1.min.js", "background.js"]
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}
