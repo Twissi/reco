@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  console.log("Run background.js")
+  console.log("### Run background.js")
 
-  //listen to messages from the content script
+  // listen to messages from the content script
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message && message.task == 'ebaySearch') {
         var searchString = message.string;
@@ -14,7 +14,6 @@
           var images = $.map(imageContainer, (container) => {
             return "<img src='" + $(container).data("imgsrc") + "' />";
           });
-          //console.log(response);
           sendResponse({task: message.task, content: images});
         });
 
@@ -31,7 +30,7 @@
         sendResponse({task: message.task, content: imageNodes});
       });
     } else if (message && message.task == 'showPageAction') {
-      console.log("show page action")
+      // show page action
       chrome.pageAction.show(sender.tab.id);
     }
     return true;
