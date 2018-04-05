@@ -18,9 +18,6 @@
       dawandaSearch(searchString, function(response){
         sendResponse({task: message.task, content: response});
       });
-    } else if (message && message.task == 'showPageAction') {
-      // show page action
-      chrome.pageAction.show(sender.tab.id);
     }
     return true;
   });

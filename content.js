@@ -75,11 +75,6 @@
             break;
         }
       }
-      // inform the background page that
-      // this tab should have a page-action (enable popup)
-      chrome.runtime.sendMessage({
-        task: 'showPageAction'
-      });
     });
   }
 
