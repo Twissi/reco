@@ -20,13 +20,13 @@ function EbayResult(title, link, imgSrc) {
 
 EbayResult.prototype = {
   render: function() {
-    return '<a target="_blank" href="' + this.link + '">' + this.title + '<br/><img src="' + this.imgSrc + '"/></a>'
+    return '<div class="item"><a target="_blank" href="' + this.link + '">' + this.title + ' @Ebay<br/><img src="' + this.imgSrc + '"/></a></div>'
   }
 }
 
 DawandaResult.prototype = {
   render: function() {
-    return '<a target="_blank" href="' + this.link + '">' + this.title + '<br/><img src="' + this.imgSrc + '"/></a>'
+    return '<div class="item"><a target="_blank" href="' + this.link + '">' + this.title + ' @Dawanda<br/><img src="' + this.imgSrc + '"/></a></div>'
   }
 }
 
@@ -37,6 +37,9 @@ function Results() {
 Results.prototype = {
   add: function(result) {
     this.results.push(result);
+  },
+  count: function() {
+    return this.results.length;
   },
   render: function () {
     var elems = "";

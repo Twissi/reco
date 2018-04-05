@@ -7,10 +7,10 @@
   const inputField = $('form.nav-searchbar input[type="text"]#twotabsearchtextbox');
   // amazon submit button selector
   const submitButton = $('form.nav-searchbar input[type="submit"]');
+  // amazon page
+  const pageContent = $('#a-page');
   // user search
   let searchString = "";
-  // alternative search results
-  let searchResults = new Results();
 
   // run search when page loads
   searchForAlternatives();
@@ -50,13 +50,16 @@
               // parse html body
               let htmlNodes = $.parseHTML(response.content);
               let productNodes = $("#search_results .product-pic", htmlNodes);
+              let dawandaResults = new Results();
               $.each(productNodes, (index, product) => {
                 let title = $("img", product).attr("alt");
                 let link = $(product).attr("href");
                 let imageSrc = $("img", product).attr("src");
                 let dawandaItem = new DawandaResult(title, link, imageSrc);
-                searchResults.add(dawandaItem);
+                dawandaResults.add(dawandaItem);
               })
+              console.log('Dawanda results count:' + dawandaResults.count());
+              showResultsInSidebar(dawandaResults);
             }
             break;
           case "ebaySearch":
@@ -64,13 +67,16 @@
               // parse html body
               let htmlNodes = $.parseHTML(response.content);
               let productNodes = $(".ad-listitem", htmlNodes);
+              let ebayResults = new Results();
               $.each(productNodes, (index, product) => {
                 let title = $(".aditem-main a", product).html();
                 let link = $(".aditem-main a", product).attr("href");
                 let imageSrc = $(".imagebox", product).data("imgsrc");
                 let ebayItem = new EbayResult(title, link, imageSrc);
-                searchResults.add(ebayItem);
+                ebayResults.add(ebayItem);
               })
+              console.log('Ebay results count:' + ebayResults.count());
+              showResultsInSidebar(ebayResults);
             }
             break;
         }
@@ -78,12 +84,26 @@
     });
   }
 
-  // listen for messages from the popup
-  chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message && message.task === 'getPopupContent') {
-
-      console.log("listen to message from popup")
-      sendResponse(searchResults.render());
+  function showResultsInSidebar(results) {
+    let sidebar = $('#ecoSidebar');
+    if (sidebar.length === 0) {
+      let windowHeight = $( window ).height();
+      let sidebar = $('<div id="ecoSidebar"></div>').css({
+        width: '30%',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        height: windowHeight,
+        overflow: 'scroll',
+        zIndex: 1000,
+        border: '1px solid #eee'
+      });
+      sidebar.html(results.render());
+      $('body').append(sidebar);
+      pageContent.css('width', '70%');
+    } else {
+      sidebar.append(results.render());
     }
-  })
+  }
 })();
