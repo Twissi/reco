@@ -9,25 +9,14 @@
         var searchString = message.string;
 
         ebaySearch(searchString, function(response){
-          var htmlNodes = parseHtml(response);
-          var imageContainer = $(".ad-listitem .imagebox", htmlNodes);
-          var images = $.map(imageContainer, (container) => {
-            return "<img src='" + $(container).data("imgsrc") + "' />";
-          });
-          sendResponse({task: message.task, content: images});
+          sendResponse({task: message.task, content: response});
         });
 
     } else if (message && message.task == 'dawandaSearch') {
       var searchString = message.string;
 
       dawandaSearch(searchString, function(response){
-        var htmlNodes = parseHtml(response);
-        var images = $("img", htmlNodes);
-        console.log("Imagecount: " + images.length);
-        var imageNodes = $.map(images, (image) => {
-          return image.outerHTML;
-        });
-        sendResponse({task: message.task, content: imageNodes});
+        sendResponse({task: message.task, content: response});
       });
     } else if (message && message.task == 'showPageAction') {
       // show page action
@@ -50,10 +39,6 @@
     httpGet(url, function(response){
       callback(response);
     });
-  }
-
-  function parseHtml(html) {
-    return $.parseHTML(html);
   }
 
   function httpGet(url, callback) {
