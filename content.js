@@ -106,4 +106,19 @@
       sidebar.append(results.render());
     }
   }
+
+  // listen to messages from popup
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message) {
+      switch(message.task) {
+        case "pageMetadata":
+          sendResponse({
+            'url': window.location.href,
+            'title': document.title,
+            'summary': window.getSelection().toString()
+          });
+          break;
+      }
+    }
+  });
 })();
