@@ -20,6 +20,9 @@
 
   function searchForAlternatives() {
     let validInput = inputField.length !== 0 && inputField.val() !== "";
+    let sidebar = $('#ecoSidebar');
+
+    sidebar.remove();
 
     if( validInput && searchString !== inputField.val() ) {
       console.log("Found new search string: " + inputField.val());
