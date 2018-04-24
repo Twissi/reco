@@ -31,14 +31,17 @@ function savePage() {
   let title = document.getElementById('title');
   let url = document.getElementById('url');
   let summary = document.getElementById('summary');
-  let tags = document.getElementById('tags');
-  let rating = document.getElementById('rating');
+  let searchtags = document.getElementById('searchtags');
+  let alternative = document.getElementById('alternative');
 
-  let params = 'Titel=' + encodeURIComponent(title.value) +
+
+  let params = 'Title=' + encodeURIComponent(title.value) +
                '&URL=' + encodeURIComponent(url.value) +
-               '&Beschreibung=' + encodeURIComponent(summary.value) +
-               '&Tags=' + encodeURIComponent(tags.value) +
-               '&Bewertung=' + encodeURIComponent(rating.value);
+               '&Description=' + encodeURIComponent(summary.value) +
+               '&SearchTags=' + encodeURIComponent(searchtags.value) +
+               '&AlternativeTags=' + encodeURIComponent(alternative.value);
+               '&Environment=' + encodeURIComponent(environment.value);
+
 
   // Replace any instances of the URLEncoded space char with +
   params = params.replace(/%20/g, '+');
