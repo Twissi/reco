@@ -68,15 +68,7 @@
     if (sidebar.length === 0) {
       let windowHeight = $( window ).height();
       let sidebar = $('<div id="ecoSidebar"></div>').css({
-        width: '30%',
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        backgroundColor: '#fff',
         height: windowHeight,
-        overflow: 'scroll',
-        zIndex: 1000,
-        border: '1px solid #eee'
       });
       sidebar.html(results.render());
       $('body').append(sidebar);

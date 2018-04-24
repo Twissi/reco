@@ -13,6 +13,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"], //*://*.amazon.de/*
+      "css": ["content.css"],
       "js": ["libs/jquery-3.3.1.min.js", "content_base.js", "content.js"]
     }
   ],
