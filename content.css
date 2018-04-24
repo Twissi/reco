@@ -8,3 +8,54 @@
   z-index: 1000;
   border: 1px solid #eee;
 }
+
+#sidebar {
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+}
+.sidebar_drawer {
+  width: 500px;
+  height: 100vh;
+  overflow: scroll;
+  background-color: #fff;
+  display: block;
+}
+.sidebar_drawer.hidden {
+  display: none;
+}
+.sidebar_buttons {
+  width: 30px;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.sidebar_button {
+  width: 10px;
+  border: 1px solid #eee;
+  height: 20%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 6%;
+  margin-left: 5px;
+}
+.sidebar_button:last-child {
+  margin-bottom: 0;
+}
+.sidebar_button--articles {
+  border: 1px solid red;
+}
+.sidebar_button--alternatives {
+  border: 1px solid green;
+}
+.sidebar_button--diy {
+  border: 1px solid blue;
+}
+.sidebar_button--used {
+  border: 1px solid orange;
+}
