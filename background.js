@@ -12,26 +12,12 @@
           sendResponse({task: message.task, content: response});
         });
 
-    } else if (message && message.task == 'dawandaSearch') {
-      var searchString = message.string;
-
-      dawandaSearch(searchString, function(response){
-        sendResponse({task: message.task, content: response});
-      });
     }
     return true;
   });
 
   function ebaySearch(searchString, callback) {
     var url = "https://www.ebay-kleinanzeigen.de/s-" + searchString + "/k0";
-    console.log(url);
-    httpGet(url, function(response){
-      callback(response);
-    });
-  }
-
-  function dawandaSearch(searchString, callback) {
-    var url = "https://de.dawanda.com/srch?q=" + searchString;
     console.log(url);
     httpGet(url, function(response){
       callback(response);

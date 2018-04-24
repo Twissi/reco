@@ -27,7 +27,6 @@
     if( validInput && searchString !== inputField.val() ) {
       console.log("Found new search string: " + inputField.val());
       searchString = inputField.val();
-      triggerDawandaSearch(searchString);
       triggerEbaySearch(searchString);
     }
   }
@@ -38,33 +37,10 @@
     sendMessageToBackgroundScript({'task': 'ebaySearch', "string": searchString})
   };
 
-  // dawanda search
-  function triggerDawandaSearch(searchString) {
-    console.log("Run dawanda search")
-    sendMessageToBackgroundScript({'task': 'dawandaSearch', "string": searchString})
-  };
-
   function sendMessageToBackgroundScript(message) {
     chrome.runtime.sendMessage(null, message, function(response) {
       if (response) {
         switch(response.task) {
-          case "dawandaSearch":
-            if (response.content !== "") {
-              // parse html body
-              let htmlNodes = $.parseHTML(response.content);
-              let productNodes = $("#search_results .product-pic", htmlNodes);
-              let dawandaResults = new Results();
-              $.each(productNodes, (index, product) => {
-                let title = $("img", product).attr("alt");
-                let link = $(product).attr("href");
-                let imageSrc = $("img", product).attr("src");
-                let dawandaItem = new DawandaResult(title, link, imageSrc);
-                dawandaResults.add(dawandaItem);
-              })
-              console.log('Dawanda results count:' + dawandaResults.count());
-              showResultsInSidebar(dawandaResults);
-            }
-            break;
           case "ebaySearch":
             if (response.content !== "") {
               // parse html body

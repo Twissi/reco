@@ -1,16 +1,3 @@
-function DawandaResult(title, link, imgSrc) {
-  this.domain = "https://de.dawanda.com";
-  this.title = title || "";
-  this.link = this.domain + link;
-  this.imgSrc = imgSrc || "";
-}
-
-DawandaResult.prototype = {
-  render: function() {
-    return '<a target="_blank" href="' + this.link + '">' + this.title + '<br/><img src="' + this.imgSrc + '"/></a>'
-  }
-}
-
 function EbayResult(title, link, imgSrc) {
   this.domain = "https://www.ebay-kleinanzeigen.de";
   this.title = title || "";
@@ -21,12 +8,6 @@ function EbayResult(title, link, imgSrc) {
 EbayResult.prototype = {
   render: function() {
     return '<div class="item"><a target="_blank" href="' + this.link + '">' + this.title + ' @Ebay<br/><img src="' + this.imgSrc + '"/></a></div>'
-  }
-}
-
-DawandaResult.prototype = {
-  render: function() {
-    return '<div class="item"><a target="_blank" href="' + this.link + '">' + this.title + ' @Dawanda<br/><img src="' + this.imgSrc + '"/></a></div>'
   }
 }
 
