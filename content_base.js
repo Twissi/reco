@@ -1,15 +1,19 @@
 function Sidebar(){
-  this.markup = '<div id="sidebar">' +
-      '<div class="sidebar_drawer sidebar_drawer--articles hidden">Wissenswert</div>' +
+  this.markup = '' +
+    '<div class="sidebar_bg"></div>' +
+    '<div class="sidebar_drawers">' +
+      '<div class="sidebar_drawer sidebar_drawer--articles hidden">' +
+        '<div class="sidebar_button sidebar_button--articles" data-content="articles"></div>' +
+        'Wissenswert</div>' +
       '<div class="sidebar_drawer sidebar_drawer--alternatives hidden">Empfehlungen</div>' +
       '<div class="sidebar_drawer sidebar_drawer--diy hidden">Selbermachen</div>' +
       '<div class="sidebar_drawer sidebar_drawer--used hidden">Gebraucht</div>' +
-      '<div class="sidebar_buttons">' +
-        '<div class="sidebar_button sidebar_button--articles" data-content="articles"></div>' +
-        '<div class="sidebar_button sidebar_button--alternatives" data-content="alternatives"></div>' +
-        '<div class="sidebar_button sidebar_button--diy" data-content="diy"></div>' +
-        '<div class="sidebar_button sidebar_button--used" data-content="used"></div>' +
-      '</div>' +
+    '</div>' +
+    '<div class="sidebar_buttons">' +
+      '<div class="sidebar_button sidebar_button--articles" data-content="articles"></div>' +
+      '<div class="sidebar_button sidebar_button--alternatives" data-content="alternatives"></div>' +
+      '<div class="sidebar_button sidebar_button--diy" data-content="diy"></div>' +
+      '<div class="sidebar_button sidebar_button--used" data-content="used"></div>' +
     '</div>';
 }
 
@@ -24,10 +28,12 @@ Sidebar.prototype = {
   let requestedDrawer = $(this).data("content");
   console.log("onClick " + requestedDrawer);
   if ($(".sidebar_drawer--" + requestedDrawer).is(":visible")) {
-    $(".sidebar_drawer--" + requestedDrawer).hide("slow");
+    $(".sidebar_drawer--" + requestedDrawer).hide();
+    // $(".sidebar_button--" + requestedDrawer).css('visibility', 'visible');
   } else {
     $(".sidebar_drawer").hide();
-    $(".sidebar_drawer--" + requestedDrawer).show("slow");
+    $(".sidebar_drawer--" + requestedDrawer).show();
+    // $(".sidebar_button--" + requestedDrawer).css('visibility', 'hidden');
   }
  }
 }
