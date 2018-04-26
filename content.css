@@ -89,7 +89,21 @@
   padding: 5px 0;
 }
 .sidebar_button .bar {
+  border-radius: 10px;
   height: 100%;
+  position: relative;
+}
+.sidebar_button .bar:after {
+  content: '';
+  position: absolute;
+  display: block;
+  bottom: -5px;
+  right: -2px;
+  width: 22px;
+  height: 22px;
+  background-size: 20px 20px;
+  background-position: center;
+  border-radius: 22px;
 }
 .sidebar_button:last-child {
   margin-bottom: 0;
@@ -98,17 +112,33 @@
   border: 2px solid #454545;
   background-color: #E9E9E9;
 }
+.sidebar_button--articles .bar:after {
+  background-color: #454545;
+  background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_articles.png);
+}
 .sidebar_button--alternatives .bar {
   border: 2px solid #57BE84;
   background-color: #DDF8EE;
+}
+.sidebar_button--alternatives .bar:after {
+  background-color: #57BE84;
+  background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_alternative.png);
 }
 .sidebar_button--diy .bar {
   border: 2px solid #5DCED4;
   background-color: #C3EFF1;
 }
+.sidebar_button--diy .bar:after {
+  background-color: #5DCED4;
+  background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_diy.png);
+}
 .sidebar_button--used .bar {
   border: 2px solid #5A9AE1;
   background-color: #DCEDFD;
+}
+.sidebar_button--used .bar:after {
+  background-color: #5A9AE1;
+  background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_used.png);
 }
 .sidebar_drawer .sidebar_button {
   position: absolute;

@@ -22,6 +22,10 @@
     "scripts": ["libs/jquery-3.3.1.min.js", "background.js"]
   },
 
+  "web_accessible_resources": [
+    "icons/*"
+  ],
+
   "permissions": [
     "activeTab",
     "storage"
