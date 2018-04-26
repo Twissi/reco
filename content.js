@@ -18,6 +18,11 @@
   // event listener for amazon search submit button
   submitButton.on("click", searchForAlternatives);
 
+  let sidebar = new Sidebar();
+  $('body').append(sidebar.render());
+  sidebar.setEventListener();
+
+
   function searchForAlternatives() {
     let validInput = inputField.length !== 0 && inputField.val() !== "";
     let sidebar = $('#ecoSidebar');
@@ -27,7 +32,7 @@
     if( validInput && searchString !== inputField.val() ) {
       console.log("Found new search string: " + inputField.val());
       searchString = inputField.val();
-      triggerEbaySearch(searchString);
+      //triggerEbaySearch(searchString);
     }
   }
 
