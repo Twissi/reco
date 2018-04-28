@@ -67,13 +67,17 @@ function EbayResult(title, link, imgSrc) {
 EbayResult.prototype = {
   render: function() {
     return (
-      '<div class="item"><a target="_blank" href="' +
+      '<a target="_blank" class="item" href="' +
       this.link +
       '">' +
-      this.title +
-      ' @Ebay<br/><img src="' +
+      '<div class="item_image" style="background-image: url(' +
       this.imgSrc +
-      '"/></a></div>'
+      ')">' +
+      "</div>" +
+      '<div class="item_description">' +
+      this.title +
+      "</div>" +
+      "</a>"
     );
   }
 };
