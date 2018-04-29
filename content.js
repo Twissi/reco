@@ -71,7 +71,6 @@
 
   function showResultsInSidebar(results) {
     let sidebarContent = $(".sidebar_drawer--used .content");
-    console.log(sidebarContent);
     sidebarContent.append(results.render());
   }
 

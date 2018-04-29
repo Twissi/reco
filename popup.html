@@ -18,21 +18,57 @@
 
   <body>
     <div id="status-display"></div>
+    <br/><br/>
     <form id="savePage">
-        URL:<input id="url" type="URL" name="URL" />
-      </br>
-        Titel:<input id="title" type="text" name="Title" />
-      </br>
-        Beschreibung:<input id="summary" type="text" name="Description" />
-      </br>
-        Bei diesen Suchbegriffen soll der Artikel zu sehen sein:<input id="searchtags" type="text" name="SearchTags" />
-      </br>
-        Tags:<input id="alternative" type="text" name="AlternativeTags" />
-      </br>
-      
-
-
-      <input type="submit" value="Speichern" />
+      URL:<input type="URL" name="URL">
+      <br>
+      Titel:<input type="text" name="Title">
+      <br>
+      Beschreibung:<input type="text" name="Description">
+      <br>
+      Bei diesen Suchbegriffen soll der Artikel zu sehen sein:<input type="text" id="searchtags" name="SearchTags">
+      <br><br>
+      <p>Welches Fazit zieht der Artikel zur Umwelt?</p>
+        <input type="radio" id="en1" name="Environment" value="red">
+        <label for="en1"> schlecht </label>  <br>
+        <input type="radio" id="en2" name="Environment" value="yellow">
+        <label for="en2"> kritisch </label>  <br>
+        <input type="radio" id="en3" name="Environment" value="green">
+        <label for="en3"> gut </label>
+      <br>
+      <p>Welches Fazit zieht der Artikel zu Menschenrechten?</p>
+        <input type="radio" id="re" name="Humanrights" value="red">
+        <label for="re"> schlecht</label>
+      <br>
+        <input type="radio" id="ye" name="Humanrights" value="yellow">
+        <label for="ye"> mittel</label>
+        <br>
+        <input type="radio" id="gr" name="Humanrights" value="green">
+        <label for="gr"> gut</label>
+      <br>
+      <p>Welches Fazit zieht der Artikel zur Gesundheit?</p>
+        <input type="radio" id="re" name="Health" value="red">
+        <label for="re"> schlecht</label>
+      <br>
+        <input type="radio" id="ye" name="Health" value="yellow">
+        <label for="ye"> mittel</label>
+        <br>
+        <input type="radio" id="gr" name="Health" value="green">
+        <label for="gr"> gut</label>
+      <br>
+      <p>Welches Fazit zieht der Artikel zu Tierschutz?</p>
+        <input type="radio" id="re" name="Animalrights" value="red">
+        <label for="re"> schlecht</label>
+      <br>
+        <input type="radio" id="ye" name="Animalrights" value="yellow">
+        <label for="ye"> mittel</label>
+        <br>
+        <input type="radio" id="gr" name="Animalrights" value="green">
+        <label for="gr"> gut</label>
+      <br>
+      Kannst du ein alternatives Produkt empfehlen? <input type="text" name="AlternativeTags">
+      <br>
+      <input type="submit" value="Speichern">
     </form>
   </body>
 </html>
