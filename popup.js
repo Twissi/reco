@@ -8,6 +8,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tab) {
   chrome.tabs.sendMessage(tab[0].id, { task: "pageMetadata" }, function(
     response
   ) {
+    console.log("prefill");
     if (response) {
       document.getElementsByName("URL")[0].value = response.url || "";
       document.getElementsByName("Title")[0].value = response.title || "";
@@ -30,64 +31,50 @@ function savePage() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", postUrl, true);
 
-  // Prepare the data to be POSTed by URLEncoding each field's contents
   let title = document.getElementsByName("Title")[0];
   let url = document.getElementsByName("URL")[0];
   let description = document.getElementsByName("Description")[0];
   let searchtags = document.getElementsByName("SearchTags")[0];
   let alternative = document.getElementsByName("AlternativeTags")[0];
-  let environment = document.querySelector(
-    'input[name = "Environment"]:checked'
-  );
-  let humanrights = document.querySelector(
-    'input[name = "Humanrights"]:checked'
-  );
+  let environment = document.querySelector('input[name = "Environment"]:checked');
+  let humanrights = document.querySelector('input[name = "Humanrights"]:checked');
   let health = document.querySelector('input[name = "Health"]:checked');
-  let animalrights = document.querySelector(
-    'input[name = "Animalrights"]:checked'
-  );
+  let animalrights = document.querySelector('input[name = "Animalrights"]:checked');
 
   if (environment) {
-    environment = "&Environment=" + encodeURIComponent(environment.value);
+    environment = encodeURIComponent(environment.value);
   } else {
     environment = "";
   }
 
   if (humanrights) {
-    humanrights = "&Humanrights=" + encodeURIComponent(humanrights.value);
+    humanrights = encodeURIComponent(humanrights.value);
   } else {
     humanrights = "";
   }
 
   if (health) {
-    health = "&Health=" + encodeURIComponent(health.value);
+    health = encodeURIComponent(health.value);
   } else {
     health = "";
   }
 
   if (animalrights) {
-    animalrights = "&Animalrights=" + encodeURIComponent(animalrights.value);
+    animalrights = encodeURIComponent(animalrights.value);
   } else {
     animalrights = "";
   }
 
   let params =
-    "Title=" +
-    encodeURIComponent(title.value) +
-    "&URL=" +
-    encodeURIComponent(url.value) +
-    "&Description=" +
-    encodeURIComponent(description.value) +
-    "&SearchTags=" +
-    encodeURIComponent(searchtags.value) +
-    encodeURIComponent(environment) +
-    encodeURIComponent(humanrights) +
-    "&Health=" +
-    encodeURIComponent(health) +
-    "&Animalrights=" +
-    encodeURIComponent(animalrights) +
-    "&AlternativeTags=" +
-    encodeURIComponent(alternative.value);
+    "Title=" + encodeURIComponent(title.value) +
+    "&URL=" + encodeURIComponent(url.value) +
+    "&Description=" + encodeURIComponent(description.value) +
+    "&SearchTags=" + encodeURIComponent(searchtags.value) +
+    "&Environment=" + environment +
+    "&Humanrights=" + humanrights +
+    "&Health=" + health +
+    "&Animalrights=" + animalrights +
+    "&AlternativeTags=" + encodeURIComponent(alternative.value);
 
   // Replace any instances of the URLEncoded space char with +
   params = params.replace(/%20/g, "+");

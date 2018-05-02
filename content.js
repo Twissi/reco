@@ -77,6 +77,7 @@
   // listen to messages from popup
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message) {
+      console.log("prefill content.js");
       switch (message.task) {
         case "pageMetadata":
           sendResponse({
