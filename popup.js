@@ -35,7 +35,6 @@ function savePage() {
   let url = document.getElementsByName("URL")[0];
   let description = document.getElementsByName("Description")[0];
   let searchtags = document.getElementsByName("SearchTags")[0];
-  let alternative = document.getElementsByName("AlternativeTags")[0];
   let environment = document.querySelector('input[name = "Environment"]:checked');
   let humanrights = document.querySelector('input[name = "Humanrights"]:checked');
   let health = document.querySelector('input[name = "Health"]:checked');
@@ -73,8 +72,7 @@ function savePage() {
     "&Environment=" + environment +
     "&Humanrights=" + humanrights +
     "&Health=" + health +
-    "&Animalrights=" + animalrights +
-    "&AlternativeTags=" + encodeURIComponent(alternative.value);
+    "&Animalrights=" + animalrights;
 
   // Replace any instances of the URLEncoded space char with +
   params = params.replace(/%20/g, "+");
