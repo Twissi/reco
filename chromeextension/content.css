@@ -125,6 +125,9 @@
   border: 2px solid #454545;
   background-color: #E9E9E9;
 }
+.sidebar_button--articles .bar.bar--filled {
+  background-color: #454545;
+}
 .sidebar_button--articles .bar:after {
   background-color: #454545;
   background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_articles.png);
@@ -132,6 +135,9 @@
 .sidebar_button--alternatives .bar {
   border: 2px solid #57BE84;
   background-color: #DDF8EE;
+}
+.sidebar_button--alternatives .bar.bar--filled {
+  background-color: 2px solid #57BE84;
 }
 .sidebar_button--alternatives .bar:after {
   background-color: #57BE84;
@@ -141,6 +147,9 @@
   border: 2px solid #5DCED4;
   background-color: #C3EFF1;
 }
+.sidebar_button--diy .bar.bar--filled {
+  background-color: #5DCED4;
+}
 .sidebar_button--diy .bar:after {
   background-color: #5DCED4;
   background-image: url(chrome-extension://__MSG_@@extension_id__/icons/icon_diy.png);
@@ -148,6 +157,9 @@
 .sidebar_button--used .bar {
   border: 2px solid #5A9AE1;
   background-color: #DCEDFD;
+}
+.sidebar_button--used .bar.bar--filled {
+  background-color: #5A9AE1;
 }
 .sidebar_button--used .bar:after {
   background-color: #5A9AE1;

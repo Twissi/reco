@@ -65,7 +65,15 @@
 
   function showResultsInSidebar(results) {
     let sidebarContent = $(".sidebar_drawer--used .content");
-    sidebarContent.append(results.render());
+    if(results.length !== 0) {
+      sidebarContent.append(results.render());
+      let sidebarUsedBar = $(".sidebar_drawer--used .bar");
+      let sidebarUsedBarButton = $(".sidebar_button--diy .bar");
+      sidebarUsedBar.addClass("bar--filled");
+      sidebarUsedButton.addClass("bar--filled");
+    } else {
+      sidebarContent.html("");
+    }
   }
 
   function sendMessageToBackgroundScript(message) {
