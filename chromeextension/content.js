@@ -5,7 +5,6 @@
 
   const amazonRegex = `/(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?/i`;
   const pageUrl = window.location.href;
-  let sidebar;
 
   // listen to messages from popup
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
@@ -32,8 +31,8 @@
   }
 
   function initSidebar() {
-    sidebar = new Sidebar();
-    $("body").addClass="reco-extension";
+    let sidebar = new Sidebar();
+    $("body").addClass("reco-extension");
     $("body").append(sidebar.render());
     sidebar.setEventListener();
 
