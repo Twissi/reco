@@ -3,7 +3,7 @@
 
   console.log("### Run content.js");
 
-  const amazonRegex = `/(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?/i`;
+  let amazonRegex = '(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?';
   const pageUrl = window.location.href;
 
   // listen to messages from popup
@@ -23,7 +23,7 @@
   });
 
   // dont show extension for non-amazon pages
-  if (pageUrl.search(amazonRegex) !== -1) {
+  if (pageUrl.search(amazonRegex) === -1) {
     return;
   } else {
     initSidebar();
