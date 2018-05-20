@@ -3,29 +3,51 @@
 
   console.log("### Run content.js");
 
-  // amazon input selector
-  const inputField = $(
-    'form.nav-searchbar input[type="text"]#twotabsearchtextbox'
-  );
-  // amazon submit button selector
-  const submitButton = $('form.nav-searchbar input[type="submit"]');
-  // amazon page
-  const pageContent = $("#a-page");
-  // user search
-  let searchString = "";
+  const amazonRegex = `/(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?/i`;
+  const pageUrl = window.location.href;
+  let sidebar;
 
-  // run search when page loads
-  searchForAlternatives();
+  // listen to messages from popup
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message) {
+      console.log("prefill content.js");
+      switch (message.task) {
+        case "pageMetadata":
+          sendResponse({
+            url: window.location.href,
+            title: document.title,
+            summary: window.getSelection().toString()
+          });
+          break;
+      }
+    }
+  });
 
-  // event listener for amazon search submit button
-  submitButton.on("click", searchForAlternatives);
+  // dont show extension for non-amazon pages
+  if (pageUrl.search(amazonRegex) !== -1) {
+    return;
+  } else {
+    initSidebar();
+    searchForAlternatives();
+  }
 
-  let sidebar = new Sidebar();
-  $("body").append(sidebar.render());
-  sidebar.setEventListener();
+  function initSidebar() {
+    sidebar = new Sidebar();
+    $("body").addClass="reco-extension";
+    $("body").append(sidebar.render());
+    sidebar.setEventListener();
+
+    // event listener for amazon search submit button
+    const submitButton = $('form.nav-searchbar input[type="submit"]');
+    submitButton.on("click", searchForAlternatives);
+  }
 
   function searchForAlternatives() {
+    const inputField = $(
+      'form.nav-searchbar input[type="text"]#twotabsearchtextbox'
+    );
     let validInput = inputField.length !== 0 && inputField.val() !== "";
+    let searchString = "";
     let sidebar = $("#ecoSidebar");
 
     sidebar.remove();
@@ -37,10 +59,14 @@
     }
   }
 
-  // ebay search
   function triggerEbaySearch(searchString) {
     console.log("Run ebay search");
     sendMessageToBackgroundScript({ task: "ebaySearch", string: searchString });
+  }
+
+  function showResultsInSidebar(results) {
+    let sidebarContent = $(".sidebar_drawer--used .content");
+    sidebarContent.append(results.render());
   }
 
   function sendMessageToBackgroundScript(message) {
@@ -68,25 +94,4 @@
       }
     });
   }
-
-  function showResultsInSidebar(results) {
-    let sidebarContent = $(".sidebar_drawer--used .content");
-    sidebarContent.append(results.render());
-  }
-
-  // listen to messages from popup
-  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message) {
-      console.log("prefill content.js");
-      switch (message.task) {
-        case "pageMetadata":
-          sendResponse({
-            url: window.location.href,
-            title: document.title,
-            summary: window.getSelection().toString()
-          });
-          break;
-      }
-    }
-  });
 })();
