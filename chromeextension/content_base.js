@@ -18,14 +18,17 @@ function Sidebar() {
     '<div class="sidebar_drawer sidebar_drawer--articles hidden">' +
     '<div class="sidebar_button sidebar_button--articles" data-content="articles"><div class="bar"></div></div>' +
     '<div class="headline">Wissenswert</div>' +
+    '<div class="content"></div>' +
     "</div>" +
     '<div class="sidebar_drawer sidebar_drawer--alternatives hidden">' +
     '<div class="sidebar_button sidebar_button--alternatives" data-content="alternatives"><div class="bar"></div></div>' +
     '<div class="headline">Empfehlungen</div>' +
+    '<div class="content"></div>' +
     "</div>" +
     '<div class="sidebar_drawer sidebar_drawer--diy hidden">' +
     '<div class="sidebar_button sidebar_button--diy" data-content="diy"><div class="bar"></div></div>' +
     '<div class="headline">Selbermachen</div>' +
+    '<div class="content"></div>' +
     "</div>" +
     '<div class="sidebar_drawer sidebar_drawer--used hidden">' +
     '<div class="sidebar_button sidebar_button--used" data-content="used"><div class="bar"></div></div>' +
@@ -46,12 +49,12 @@ Sidebar.prototype = {
     return this.markup;
   },
   setEventListener: function() {
-    var self = this;
+    const self = this;
     $(".sidebar_button").click(function(){
-      let requestedDrawer = $(this).data("content");
+      const requestedDrawer = $(this).data("content");
       console.log("onClick " + requestedDrawer);
 
-      let requestDrawerIsHidden = $(".sidebar_drawer--" + requestedDrawer).hasClass("hidden");
+      const requestDrawerIsHidden = $(".sidebar_drawer--" + requestedDrawer).hasClass("hidden");
       if (requestDrawerIsHidden) {
         self.state.closed();
         self.state.open(requestedDrawer);
@@ -104,5 +107,42 @@ Results.prototype = {
       elems = elems + result.render();
     });
     return elems;
+  }
+};
+
+function Articles() {
+  this.articles = [];
+};
+
+Articles.prototype = {
+  add: function(article) {
+    this.articles.push(article);
+  }
+};
+
+function Article(title, description, url, environment, health, humanrights, animalrights) {
+  this.title = title || "";
+  this.url = url || "";
+  this.description = description || "";
+  this.environment = environment || "";
+  this.health = health || "";
+  this.humanrights = humanrights || "";
+  this.animalrights = animalrights || "";
+};
+
+Article.prototype = {
+  render: function() {
+    return (
+      '<a target="_blank" class="item" href="' +
+      this.url +
+      '">' +
+      '<div class="item_title">' +
+      this.title +
+      "</div>" +
+      '<div class="item_description">' +
+      this.description +
+      "</div>" +
+      "</a>"
+    );
   }
 };

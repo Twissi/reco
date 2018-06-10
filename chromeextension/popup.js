@@ -1,7 +1,7 @@
 console.log("### Run popup script");
 
 let statusDisplay = null;
-let postUrl = "http://hau-rock.de/experiment/seite2.php";
+const postUrl = "http://hau-rock.de/experiment/seite2.php";
 
 // prefill savePage form
 chrome.tabs.query({ active: true, currentWindow: true }, function(tab) {
@@ -28,7 +28,7 @@ window.addEventListener("load", function(evt) {
 function savePage() {
   event.preventDefault();
 
-  let xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open("POST", postUrl, true);
 
   let title = document.getElementsByName("Title")[0];
@@ -76,7 +76,7 @@ function savePage() {
 
   // Replace any instances of the URLEncoded space char with +
   params = params.replace(/%20/g, "+");
-  let formContentType = "application/x-www-form-urlencoded";
+  const formContentType = "application/x-www-form-urlencoded";
   xhr.setRequestHeader("Content-type", formContentType);
 
   xhr.onreadystatechange = function() {

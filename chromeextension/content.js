@@ -3,7 +3,7 @@
 
   console.log("### Run content.js");
 
-  let amazonRegex = '(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?';
+  const amazonRegex = '(http(s)?:\/\/)?(www)?(\.)?amazon\.de(\/.*)?';
   const pageUrl = window.location.href;
 
   // listen to messages from popup
@@ -27,29 +27,35 @@
     return;
   } else {
     initSidebar();
+    loadArticles();
     searchForAlternatives();
   }
 
   function initSidebar() {
-    let sidebar = new Sidebar();
+    const sidebar = new Sidebar();
     $("body").addClass("reco-extension");
     $("body").append(sidebar.render());
     sidebar.setEventListener();
 
     // event listener for amazon search submit button
     const submitButton = $('form.nav-searchbar input[type="submit"]');
-    submitButton.on("click", searchForAlternatives);
+    submitButton.on("click", function(){
+      console.log('submit button clicked');
+      searchForAlternatives();
+    });
+  }
+
+  function loadArticles() {
+    console.log("Fetch articles");
+    sendMessageToBackgroundScript({ task: "fetchArticles" });
   }
 
   function searchForAlternatives() {
     const inputField = $(
       'form.nav-searchbar input[type="text"]#twotabsearchtextbox'
     );
-    let validInput = inputField.length !== 0 && inputField.val() !== "";
+    const validInput = inputField.length !== 0 && inputField.val() !== "";
     let searchString = "";
-    let sidebar = $("#ecoSidebar");
-
-    sidebar.remove();
 
     if (validInput && searchString !== inputField.val()) {
       console.log("Found new search string: " + inputField.val());
@@ -63,14 +69,27 @@
     sendMessageToBackgroundScript({ task: "ebaySearch", string: searchString });
   }
 
-  function showResultsInSidebar(results) {
-    let sidebarContent = $(".sidebar_drawer--used .content");
-    if(results.length !== 0) {
+  function showEbayResultsInSidebar(results) {
+    const sidebarContent = $(".sidebar_drawer--used .content");
+    if (results && results.length !== 0) {
       sidebarContent.append(results.render());
-      let sidebarUsedBar = $(".sidebar_drawer--used .bar");
-      let sidebarUsedBarButton = $(".sidebar_button--diy .bar");
+      const sidebarUsedBar = $(".sidebar_drawer--used .bar");
+      const sidebarUsedBarButton = $(".sidebar_button--used .bar");
       sidebarUsedBar.addClass("bar--filled");
-      sidebarUsedButton.addClass("bar--filled");
+      sidebarUsedBarButton.addClass("bar--filled");
+    } else {
+      sidebarContent.html("");
+    }
+  }
+
+  function showArticleResultsInSidebar(results) {
+    const sidebarContent = $(".sidebar_drawer--articles .content");
+    if (results && results.length !== 0) {
+      sidebarContent.append(results.render());
+      const sidebarArticleBar = $(".sidebar_drawer--articles .bar");
+      const sidebarArticleBarButton = $(".sidebar_button--articles .bar");
+      sidebarArticleBar.addClass("bar--filled");
+      sidebarArticleBarButton.addClass("bar--filled");
     } else {
       sidebarContent.html("");
     }
@@ -83,18 +102,30 @@
           case "ebaySearch":
             if (response.content !== "") {
               // parse html body
-              let htmlNodes = $.parseHTML(response.content);
-              let productNodes = $(".ad-listitem", htmlNodes);
-              let ebayResults = new Results();
+              const htmlNodes = $.parseHTML(response.content);
+              const productNodes = $(".ad-listitem", htmlNodes);
+              const ebayResults = new Results();
               $.each(productNodes, (index, product) => {
-                let title = $(".aditem-main a", product).html();
-                let link = $(".aditem-main a", product).attr("href");
-                let imageSrc = $(".imagebox", product).data("imgsrc");
-                let ebayItem = new EbayResult(title, link, imageSrc);
+                const title = $(".aditem-main a", product).html();
+                const link = $(".aditem-main a", product).attr("href");
+                const imageSrc = $(".imagebox", product).data("imgsrc");
+                const ebayItem = new EbayResult(title, link, imageSrc);
                 ebayResults.add(ebayItem);
               });
               console.log("Ebay results count:" + ebayResults.count());
-              showResultsInSidebar(ebayResults);
+              showEbayResultsInSidebar(ebayResults);
+            }
+            break;
+          case "fetchArticles":
+            if (response.content !== "") {
+              const articleResults = new Results();
+              const articlesJson = JSON.parse(response.content);
+              $.each(articlesJson, (index, article) => {
+                const newArticle = new Article(article.Title, article.Description, article.URL);
+                articleResults.add(newArticle);
+              });
+              console.log("Show articles");
+              showArticleResultsInSidebar(articleResults);
             }
             break;
         }
