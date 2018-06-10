@@ -19,6 +19,9 @@
   height: 100vh;
   width: 385px;
 }
+.sidebar_drawers.hidden {
+  display: none;
+}
 .sidebar_drawer {
   width: 100%;
   height: 100vh;
@@ -94,6 +97,9 @@
   position: fixed;
   top: 0;
   right: 5px;
+}
+.sidebar_buttons .sidebar_button.hidden {
+  visibility: hidden;
 }
 .sidebar_button {
   width: 15px;

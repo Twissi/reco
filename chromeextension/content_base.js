@@ -1,8 +1,20 @@
 function Sidebar() {
+  this.state = {
+    closed: function(){
+      $(".sidebar_drawers").addClass("hidden");
+      $(".sidebar_drawer").addClass("hidden");
+      $(".sidebar_buttons .sidebar_button").removeClass("hidden");
+    },
+    open: function(requestedDrawer) {
+      $(".sidebar_drawers").removeClass("hidden");
+      $(".sidebar_drawer--" + requestedDrawer).removeClass("hidden");
+      $(".sidebar_buttons .sidebar_button--" + requestedDrawer).addClass("hidden");
+    }
+  };
+
   this.markup =
-    "" +
     '<div class="sidebar_bg"></div>' +
-    '<div class="sidebar_drawers">' +
+    '<div class="sidebar_drawers hidden">' +
     '<div class="sidebar_drawer sidebar_drawer--articles hidden">' +
     '<div class="sidebar_button sidebar_button--articles" data-content="articles"><div class="bar"></div></div>' +
     '<div class="headline">Wissenswert</div>' +
@@ -34,26 +46,19 @@ Sidebar.prototype = {
     return this.markup;
   },
   setEventListener: function() {
-    $(".sidebar_button").click(this.onClickEvent);
-  },
-  onClickEvent: function(event) {
-    let requestedDrawer = $(this).data("content");
-    console.log("onClick " + requestedDrawer);
-    if ($(".sidebar_drawer--" + requestedDrawer).is(":visible")) {
-      $(".sidebar_drawer--" + requestedDrawer).hide();
-      $(".sidebar_buttons .sidebar_button--" + requestedDrawer).css(
-        "visibility",
-        "visible"
-      );
-    } else {
-      $(".sidebar_drawer").hide();
-      $(".sidebar_drawer--" + requestedDrawer).show();
-      $(".sidebar_buttons .sidebar_button").css("visibility", "visible");
-      $(".sidebar_buttons .sidebar_button--" + requestedDrawer).css(
-        "visibility",
-        "hidden"
-      );
-    }
+    var self = this;
+    $(".sidebar_button").click(function(){
+      let requestedDrawer = $(this).data("content");
+      console.log("onClick " + requestedDrawer);
+
+      let requestDrawerIsHidden = $(".sidebar_drawer--" + requestedDrawer).hasClass("hidden");
+      if (requestDrawerIsHidden) {
+        self.state.closed();
+        self.state.open(requestedDrawer);
+      } else {
+        self.state.closed();
+      }
+    });
   }
 };
 
